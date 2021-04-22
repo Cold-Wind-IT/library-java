@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.service.RecordViewRepository">
+
+    <select id="getRecord" resultType="RecordView">
+        select * from record;
+    </select>
+
+    <insert id="recordSave" parameterType="Record">
+        insert into bookrecord(userCode, bookCode, borrowTime) values (#{userCode}, #{bookCode}, #{borrowTime});
+    </insert>
+
+    <update id="recordUpdate" parameterType="Record">
+        update bookrecord set returnTime = #{returnTime} where userCode = #{userCode} and bookCode = #{bookCode};
+    </update>
+
+</mapper>

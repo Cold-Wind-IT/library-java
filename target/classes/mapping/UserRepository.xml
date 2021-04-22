@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.service.UserRepository">
+    <select id="userLogin" resultType="User" parameterType="User">
+        select * from User where userCode = #{userCode} and loginPwd = #{loginPwd};
+    </select>
+
+    <select id="getAllUser" resultType="User">
+        select * from user;
+    </select>
+
+    <update id="userUpdate" parameterType="User">
+        update user
+        <set>
+            <if test="userCode != null and userCode != ''">
+            userCode = #{userCode},
+            </if>
+            <if test="userName!=null and userName!=''">
+            userName = #{userName},
+            </if>
+            <if test="userPwd!=null and userPwd!=''">
+            userPwd = #{userPwd},
+            </if>
+            <if test="userNum != null and userNum != ''">
+            userNum = #{userNum},
+            </if>
+        </set>
+        WHERE idUser = #{idUser};
+    </update>
+
+    <insert id="userSave" parameterType="User">
+        insert into user (userCode, userName, userNum) VALUES (#{userCode}, #{userName}, #{userNum});
+    </insert>
+
+    <delete id="userDelete" parameterType="java.lang.Integer">
+        delete from user where idUser = #{idUser}
+    </delete>
+</mapper>

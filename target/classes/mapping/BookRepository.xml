@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.library.service.BookRepository">
+    <select id="findAll" resultType="Book">
+        select * from book;
+    </select>
+
+    <select id="findByCode" parameterType="java.lang.String" resultType="Book">
+        select * from book where bookCode = #{bookCode};
+    </select>
+
+    <select id="findByQuery" parameterType="java.lang.String" resultType="Book">
+        select * from book where bookQuery like '%${_parameter}%'
+    </select>
+
+    <insert id="bookSave" parameterType="Book">
+        INSERT INTO book (bookName, bookCode, bookQuery, bookAuthor, bookPublishName, bookPublishYear, bookPrice, bookNum, bookBorrowed) VALUES (#{bookName}, #{bookCode}, #{bookQuery}, #{bookAuthor}, #{bookPublishName}, #{bookPublishYear}, #{bookPrice}, #{bookNum}, #{bookBorrowed});
+    </insert>
+
+    <update id="bookUpdate" parameterType="Book" >
+        update book
+        <set>
+            <if test="bookName != null and bookName != ''">bookName = #{bookName},</if>
+            <if test="bookCode != null and bookCode != ''">bookCode = #{bookCode},</if>
+            <if test="bookQuery != null and bookQuery != ''">bookQuery = #{bookQuery},</if>
+            <if test="bookAuthor != null and bookAuthor != ''">bookAuthor = #{bookAuthor},</if>
+            <if test="bookPublishName != null and bookPublishName != ''">bookPublishName = #{bookPublishName},</if>
+            <if test="bookPublishYear != null and bookPublishYear != ''">bookPublishYear = #{bookPublishYear},</if>
+            <if test="bookPrice != null and bookPrice != ''">bookPrice = #{bookPrice},</if>
+            <if test="bookNum != null and bookNum != ''">bookNum = #{bookNum},</if>
+            <if test="bookBorrowed != null and bookBorrowed != ''">bookBorrowed = #{bookBorrowed},</if>
+        </set>
+        where idBook = #{idBook}
+    </update>
+
+    <delete id="bookDelete" parameterType="java.lang.Long">
+        delete from book where idBook = #{idBook}
+    </delete>
+
+    <select id="getBookView" resultType="Book">
+        select * from bookview;
+    </select>
+
+    <update id="borrowBook" parameterType="Book">
+        update book set bookNum = #{bookNum} where bookCode = #{bookCode};
+    </update>
+
+    <update id="returnBook" parameterType="Book">
+        update book set bookNum = #{bookNum} where bookCode = #{bookCode};
+    </update>
+
+</mapper>
